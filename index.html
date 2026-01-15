@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Soulful 旅行ブログ＆コミュニティ | 開発報告書</title>
+
+<style>
+/* ===============================
+       기본 리셋 및 폰트 설정
+       =============================== */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+		sans-serif;
+	background-color: #f5f7fa;
+	color: #1f2937;
+}
+
+/* ===============================
+       풀페이지 스크롤 컨테이너
+       =============================== */
+.container {
+	height: 100vh;
+	overflow-y: scroll;
+	scroll-snap-type: y mandatory;
+}
+
+/* ===============================
+       개별 섹션 (슬라이드)
+       =============================== */
+section {
+	height: 100vh;
+	padding: 80px 120px;
+	scroll-snap-align: start;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	transition: background-color 0.3s ease;
+}
+
+/* ===============================
+       타이포그래피
+       =============================== */
+h1 {
+	font-size: 56px;
+	margin-bottom: 24px;
+	color: #0f172a;
+	font-weight: 700;
+	letter-spacing: -1px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+h2 {
+	font-size: 40px;
+	margin-bottom: 24px;
+	color: #1e40af;
+	font-weight: 600;
+	position: relative;
+	padding-bottom: 12px;
+}
+
+h2::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 60px;
+	height: 4px;
+	background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+	border-radius: 2px;
+}
+
+h3 {
+	font-size: 26px;
+	margin-top: 28px;
+	margin-bottom: 16px;
+	color: #334155;
+	font-weight: 600;
+}
+
+p {
+	font-size: 20px;
+	line-height: 1.9;
+	max-width: 900px;
+	color: #475569;
+}
+
+ul {
+	font-size: 20px;
+	line-height: 2;
+	margin-left: 24px;
+	max-width: 900px;
+}
+
+li {
+	margin-bottom: 12px;
+	color: #475569;
+	position: relative;
+	padding-left: 8px;
+}
+
+li::before {
+	content: '▹';
+	position: absolute;
+	left: -20px;
+	color: #667eea;
+	font-weight: bold;
+}
+
+li.no-before::before {
+	content: none; /* before 제거 */
+}
+
+li strong {
+	color: #1e293b;
+	font-weight: 600;
+}
+
+/* ===============================
+       섹션 하단 페이지 표시
+       =============================== */
+.footer {
+	position: absolute;
+	bottom: 40px;
+	right: 60px;
+	font-size: 14px;
+	color: #94a3b8;
+	font-weight: 500;
+	letter-spacing: 1px;
+}
+
+/* ===============================
+       섹션별 배경 톤
+       =============================== */
+.bg-white {
+	background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.bg-light {
+	background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.bg-gray {
+	background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+}
+
+/* DB 설계 슬라이드 전체 영역 */
+.db-slide {
+	min-height: 100vh;
+	padding: 80px 100px;
+	box-sizing: border-box;
+}
+
+/* 좌우 레이아웃 컨테이너 */
+.db-layout {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 60px;
+}
+
+/* 왼쪽 텍스트 영역 */
+.db-desc {
+	flex: 1;
+	font-size: 18px;
+	line-height: 1.8;
+	background: white;
+	padding: 32px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
+		rgba(0, 0, 0, 0.06);
+}
+
+/* 오른쪽 ERD 이미지 영역 */
+.erd-wrapper {
+	flex: 1;
+	text-align: center;
+	background: white;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
+		rgba(0, 0, 0, 0.06);
+}
+
+.erd-wrapper img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+/* footer 겹침 방지 */
+.db-slide .footer {
+	margin-top: 80px;
+	text-align: center;
+	color: #777;
+}
+
+/* ===============================
+       카드 스타일 (공통)
+       =============================== */
+.card-container {
+	display: flex;
+	gap: 24px;
+	margin-top: 32px;
+}
+
+.card {
+	flex: 1;
+	background: white;
+	padding: 28px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
+		rgba(0, 0, 0, 0.06);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px
+		rgba(0, 0, 0, 0.04);
+}
+
+/* ===============================
+       이미지 컨테이너
+       =============================== */
+.img-container {
+	background: white;
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+}
+
+/* ===============================
+       기술 스택 아이콘 그리드
+       =============================== */
+.tech-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px;
+	margin-bottom: 48px;
+	padding: 32px;
+	justify-content: center;
+	background: white;
+	border-radius: 16px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.tech-grid img {
+	transition: transform 0.3s ease, filter 0.3s ease;
+	filter: grayscale(20%);
+}
+
+.tech-grid img:hover {
+	transform: scale(1.1);
+	filter: grayscale(0%);
+}
+
+/* ===============================
+       동영상 섹션
+       =============================== */
+.video-section {
+	margin-top: 40px;
+}
+
+.video-container {
+	background: white;
+	padding: 32px;
+	border-radius: 12px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+	margin-bottom: 32px;
+}
+
+.video-title {
+	font-size: 22px;
+	font-weight: 600;
+	color: #1e293b;
+	margin-bottom: 16px;
+	padding-left: 12px;
+	border-left: 4px solid #667eea;
+}
+
+.video-wrapper {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%; /* 16:9 비율 */
+	background: #f1f5f9;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.video-wrapper video, .video-wrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.video-placeholder {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #94a3b8;
+	font-size: 18px;
+	text-align: center;
+}
+
+/* ===============================
+       개요 섹션 개선
+       =============================== */
+.overview-info {
+	background: white;
+	padding: 24px 32px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	margin-top: 32px;
+	display: inline-block;
+}
+
+.overview-info p {
+	margin: 0;
+	font-weight: 500;
+}
+
+/* ===============================
+       Use Case 다이어그램 개선
+       =============================== */
+.diagram-wrapper {
+	flex: 1;
+	text-align: right;
+}
+
+.diagram-container {
+	background: white;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+}
+
+.diagram-container img {
+	max-width: 100%;
+	height: 500px;
+	border-radius: 8px;
+}
+
+/* ===============================
+       학습 성과 리스트 개선
+       =============================== */
+.learning-list {
+	background: white;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+	margin-top: 32px;
+}
+
+.learning-list ul {
+	list-style: none;
+	margin-left: 0;
+}
+
+.learning-list li {
+	padding: 16px 30px;
+	margin-bottom: 16px;
+	background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+	border-radius: 8px;
+	border-left: 4px solid #667eea;
+	font-size: 22px;
+	transition: transform 0.3s ease;
+}
+
+.learning-list li:hover {
+	transform: translateX(8px);
+}
+
+.learning-list li::before {
+	content: '✓';
+	left: 5px;
+	color: #667eea;
+	font-size: 24px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<!-- ===============================
+       Slide 1 : 프로젝트 개요
+       =============================== -->
+		<section class="bg-light">
+			<h1>Soulful 旅行ブログ＆コミュニティ</h1>
+			<p>旅行先のおすすめおよびQnAによるコミュニケーションを提供する 個人ブログプラットフォーム</p>
+
+			<h3>開発目的</h3>
+			<p>Java MVCパターンを基盤としたWebアプリケーションの Full-Cycle開発経験を通じ、実務対応力を身につけること
+			</p>
+
+			<div class="overview-info">
+				<p>開発者：高俊成&nbsp;&nbsp;||&nbsp;&nbsp;開発期間：2026.01.07～2026.01.14（8日）</p>
+			</div>
+
+			<div class="footer">01 / Overview</div>
+		</section>
+
+		<!-- ===============================
+       Slide 2 : 企画意図
+       =============================== -->
+		<section class="bg-white"
+			style="display: flex; flex-direction: column; justify-content: flex-start;">
+			<div
+				style="display: flex; gap: 40px; align-items: flex-start; margin-top: 20px;">
+
+				<div style="flex: 1.2;">
+					<h2>企画意図（Concept）</h2>
+
+					<div class="card" style="margin-bottom: 24px; margin-top: 0;">
+						<p style="font-size: 18px; line-height: 1.8;">
+							従来型のMVCアーキテクチャをベースに、実務レベルのWebサービスを実装し、<br> OAuth
+							2.0や公共データAPIなどの外部ライブラ리連携を通じて、<br>
+							システムの拡張性およびデータ活用能力を検証することを目的としました。
+						</p>
+					</div>
+
+					<div class="card">
+						<p style="font-size: 18px; line-height: 1.8;">
+							特に、ユーザー認証の煩雑さを解消し、視覚情報を中心としたコンテンツ提供により、<br>
+							Webサービスの本質적価値である「利便性」と「情報伝達力」の向上を目指しました。
+						</p>
+					</div>
+				</div>
+
+				<div class="diagram-wrapper">
+					<div class="diagram-container">
+						<img src="/personalProjectPPT/mainpage.png" alt="Concept Visual"
+							style="max-height: 500px; width: auto;">
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">02 / Concept</div>
+		</section>
+
+		<!-- ===============================
+       Slide 3 : 사용자 요구사항,비기능 요구사항
+       =============================== -->
+		<section class="bg-light"
+			style="display: flex; flex-direction: column; justify-content: flex-start;">
+			<div
+				style="display: flex; gap: 40px; align-items: flex-start; margin-top: 20px;">
+
+				<div style="flex: 1.2;">
+					<h2>ユーザー別要件</h2>
+					<ul style="margin-bottom: 30px; line-height: 1.6;">
+						<li><strong>非会員</strong>：ポスト閲覧、一覧の閲覧、QnA回答が可能（質問の投稿は不可）</li>
+						<li><strong>会員</strong>：Google／一般ログイン、マイページ管理、コメント・QnAの作成／修正／削除</li>
+						<li><strong>管理者</strong>：全機能利用可能、公共データ写真APIを活用した旅行記事作成、会員管理、QnA、コメント管理</li>
+					</ul>
+
+					<h2>非機能要件</h2>
+					<ul style="line-height: 1.6;">
+						<li>AJAXによる非同期通信（ページリロードなし）</li>
+						<li>UTF-8を基盤とした多言語対応（日本語対応）</li>
+						<li>Admin Filterによる管理者ページのアクセス制御</li>
+						<li>Bcryptを用いたパスワード暗号化</li>
+					</ul>
+				</div>
+
+				<div class="diagram-wrapper">
+					<div class="diagram-container">
+						<img src="/personalProjectPPT/usecase.png" alt="Use Case Diagram">
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">03 / User Roles / Non-Functional</div>
+		</section>
+
+		<!-- ===============================
+       Slide 4 : db 설계
+       =============================== -->
+		<section class="bg-white slide db-slide">
+			<h2>DB設計（ERD）</h2>
+
+			<div class="db-layout">
+				<!-- 왼쪽 텍스트 -->
+				<div class="db-desc">
+					<ul>
+						<li><strong>MEMBER_PRO</strong>：会員情報管理</li>
+						<li><strong>BLOG_PRO</strong>：旅行ブログ投稿</li>
+						<li><strong>BLOG_IMAGE_PRO</strong>：ブログ画像管理</li>
+						<li><strong>REPLY_PRO</strong>：コメント機能</li>
+						<li><strong>QNA_PRO</strong>：QnA質問管理</li>
+						<li><strong>QNA_ANSWER_PRO</strong>：QnA回答管理</li>
+					</ul>
+				</div>
+
+				<!-- 오른쪽 이미지 -->
+				<div class="erd-wrapper" style="margin-right: 150px;">
+					<img src="/personalProjectPPT/DB_ERD.png">
+				</div>
+			</div>
+
+			<div class="footer">04 / Database</div>
+		</section>
+
+		<!-- ===============================
+       Slide 5 : MVC 아키텍처,URL 설계,보안 전략
+       =============================== -->
+		<section class="bg-light" style="position: relative;">
+
+			<h2>MVCアーキテクチャ</h2>
+			<div class="card">
+				<ul style="margin-bottom: 30px;">
+					<li><strong>Model</strong>：MemberDao / BlogDao / QnaDao /
+						ReplyDao</li>
+					<li><strong>View</strong>：JSP分離（adm / blog_post /
+						ques）＋共通レイアウト</li>
+					<li><strong>Controller</strong>：役割別Servlet設計</li>
+				</ul>
+			</div>
+
+			<div class="card-container">
+				<div class="card">
+					<h2 style="margin-top: 0;">URL設計（RESTful指向）</h2>
+					<ul style="font-size: 0.9em;">
+						<li>/member/googleCallback.do ：Googleログイン</li>
+						<li>/member/memberjoin.do ：一般会員加入</li>
+						<li>/post/list.do ：旅行記事一覧</li>
+						<li>/post/postview.do ：投稿詳細（閲覧数増加）</li>
+						<li>/reply/replyWrite.do ：コメント作成（AJAX）</li>
+						<li>/admin/main.do ：管理者ダッシュボード（Filter制御）</li>
+					</ul>
+				</div>
+
+				<div class="card">
+					<h2 style="margin-top: 0;">セキュリティ設計</h2>
+					<ul style="font-size: 0.9em;">
+						<li>Admin Filterによる管理者専用パス(/adm/*)の一원管理</li>
+						<li>Session(userid, role)を利用したリアルタイム ユーザー権限判定</li>
+						<li>権際限のないアクセス時(ADMIN未保有)のメイン画面へリダイレクト</li>
+						<li>jBcryptライブラリを活用した一方向パスワードの暗号化と検証</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="footer">05 / Architecture & Security</div>
+		</section>
+
+		<!-- ===============================
+       Slide 6 : 기술스택
+       =============================== -->
+		<section class="bg-white">
+			<h2>開発環境・技術スタック</h2>
+
+			<div class="tech-grid">
+				<img src="https://velog.velcdn.com/images/dogakday/post/cd89ba57-f98b-4f95-bb9d-eebea55bd521/1_zKnKunxf74dpaMMtcKrB9g.png" height="60" alt="Java"> 
+				<img src="https://www.vectorlogo.zone/logos/apache_tomcat/apache_tomcat-icon.svg" height="60" alt="Tomcat"> 
+				<img src="https://i.namu.wiki/i/_acAGeS8_7fnFfqlDB5hnugDC2jzWdXzMCLdGIR93QUMMAwieTb57AZzun-ebQanEdmAuUHYZlCtcOICU4TJyA.svg" width="140px" height="60" alt="Oracle">
+				<img src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" height="60" alt="HTML5">
+				<img src="https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" height="60"	alt="jquery"> 
+				<img src="https://www.vectorlogo.zone/logos/javascript/javascript-ar21~bgwhite.svg" height="60" alt="js">
+				<img src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" height="60" alt="Bootstrap"> 
+				<img src="https://oauth.net/images/oauth-2-sm.png" height="60" alt="Oauth2.0">
+				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Google_Gemini_logo_2025.svg" width="140px" height="60" alt="Gemini">
+				<img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" height="60" alt="ChatGPT">
+			</div>
+
+			<div class="card-container">
+				<div class="card">
+					<ul>
+						<li><strong>Backend:</strong> Java 17 / Servlet 4.0 / JSP</li>
+						<li><strong>Server:</strong> Apache Tomcat 9.0</li>
+						<li><strong>Database:</strong> Oracle 11g XE / OJDBC8</li>
+						<li><strong>Frontend:</strong> HTML5 / CSS3 / JavaScript
+							(ES6)</li>
+						<li><strong>UI Framework:</strong> Bootstrap 4.6 / jQuery
+							3.7.1</li>
+					</ul>
+				</div>
+				<div class="card">
+					<ul>
+						<li><strong>JSON Lib:</strong> Gson 2.10.1 / JSON-java
+							(20231013)</li>
+						<li><strong>Security Lib:</strong> jBcrypt 0.4</li>
+						<li><strong>View Lib:</strong> JSTL 1.2 / Standard.jar</li>
+						<li><strong>API:</strong> Google OAuth 2.0 / Public Photo API</li>
+						<li><strong>AI Tool:</strong> ChatGPT / Gemini (Code
+							Assistant)</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="footer">06 / Tech Stack</div>
+		</section>
+
+		<!-- ===============================
+       Slide 7 : 기능 데모 영상
+       =============================== -->
+		<section class="bg-light">
+			<h2>主要機能デモンストレーション (1/2)</h2>
+
+			<div class="video-section"
+				style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+				<div class="video-container">
+					<div class="video-title">🔐 ユーザー認証（Google OAuth & 一般ログイン）</div>
+					<div class="video-wrapper">
+						<iframe src="https://www.youtube.com/embed/eWyN3S04fKU"
+							title="YouTube video player" frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen></iframe>
+					</div>
+				</div>
+
+				<div class="video-container">
+					<div class="video-title">📝 ブログ投稿 & コメント機能（AJAX）</div>
+					<div class="video-wrapper">
+						<iframe src="https://www.youtube.com/embed/EwIC4MMKg8Y"
+							title="YouTube video player" frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen></iframe>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">07 / Feature Demo (1)</div>
+		</section>
+
+		<section class="bg-white">
+			<h2>主要機能デモンストレーション (2/2)</h2>
+
+			<div class="video-section"
+				style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: stretch;">
+				<div class="video-container" style="margin-bottom: 0;">
+					<div class="video-title">⚙️ 管理者ダッシュボード & 会員管理</div>
+					<div class="video-wrapper">
+						<iframe src="https://www.youtube.com/embed/vzxDCBRlNLQ"
+							title="YouTube video player" frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen></iframe>
+					</div>
+				</div>
+
+				<div class="video-container"
+					style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center;">
+					<div class="video-title">🚀 実装フォーカス</div>
+					<div style="padding: 20px;">
+						<ul
+							style="font-size: 20px; line-height: 2.2; list-style: none; margin-left: 0;">
+							<li style="margin-bottom: 15px;"><strong
+								style="color: #1e40af;">Security:</strong> Admin Filterによる権限制御</li>
+							<li style="margin-bottom: 15px;"><strong
+								style="color: #1e40af;">Efficiency:</strong> AJAXによる非同期データ処理</li>
+							<li class="no-before"
+								style="margin-bottom: 15px; margin-left: 85px;">&nbsp;&nbsp;公共データAPIの活用による簡単な投稿</li>
+							<li><strong style="color: #1e40af;">UX:</strong> Google
+								OAuth 2.0 簡単認証システム</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">08 / Feature Demo (2)</div>
+		</section>
+
+
+		<!-- ===============================
+       Slide 9 : 학습 성과
+       =============================== -->
+		<section class="bg-white">
+			<h2>学習成果（Learning Points）</h2>
+
+			<div class="learning-list">
+				<ul>
+					<li>MVCパターンの実践的理解</li>
+					<li>OAuth 2.0および外部API連携経験</li>
+					<li>AJAXによる動的UI制御</li>
+					<li>問題解決・デバッグ能力の向上</li>
+					<li>保守性を考慮した設計思考の習得</li>
+				</ul>
+			</div>
+
+			<div class="footer">09 / Learning</div>
+		</section>
+		
+		<section class="bg-light">
+			<h2>今後の改善点 (Future Improvements)</h2>
+			
+			<div class="learning-list">
+				<ul>
+					<li><strong>Spring Frameworkへの移行</strong>：依存性の注入(DI)による保守性の向上</li>
+					<li><strong>MyBatis/JPAの導入</strong>：SQL管理の効率化とデータアクセスの最適化</li>
+					<li><strong>AWSクラウド配備</strong>：EC2およびRDSを活用した実務的なサーバー運用</li>
+					<li><strong>レスポンシブWebデザイン</strong>：モバイル・タブレット環境への完全対応</li>
+					<li><strong>セキュリティの強化</strong>：JWT導入による認証システムの高度化</li>
+				</ul>
+			</div>
+
+			<div class="footer">10 / Future Improvements</div>
+		</section>
+	</div>
+
+</body>
+</html>
