@@ -338,12 +338,12 @@ li strong {
 /* ===============================
        Use Case 다이어그램 개선
        =============================== */
-.diagram-wrapper {
+.gram-wrapper {
 	flex: 1;
 	text-align: right;
 }
 
-.diagram-container {
+.gram-container {
 	background: white;
 	padding: 24px;
 	border-radius: 12px;
@@ -351,9 +351,9 @@ li strong {
 	display: inline-block;
 }
 
-.diagram-container img {
+.gram-container img {
 	max-width: 100%;
-	height: 500px;
+	height: 5px;
 	border-radius: 8px;
 }
 
@@ -405,7 +405,7 @@ li strong {
        =============================== -->
 		<section class="bg-light">
 			<h1>Soulful 旅行ブログ＆コミュニティ</h1>
-			<p>旅行先のおすすめおよびQnAによるコミュニケーションを提供する 個人ブログプラットフォーム</p>
+			<p>旅行先のおすすめおよびQ&Aによるコミュニケーションを提供する 個人ブログプラットフォーム</p>
 
 			<h3>開発目的</h3>
 			<p>Java MVCパターンを基盤としたWebアプリケーションの Full-Cycle開発経験を通じ、実務対応力を身につけること
@@ -445,8 +445,8 @@ li strong {
 					</div>
 				</div>
 
-				<div class="diagram-wrapper">
-					<div class="diagram-container">
+				<div class="gram-wrapper">
+					<div class="gram-container">
 						<img src="mainpage.png" alt="Concept Visual"
 							style="max-height: 500px; width: auto;">
 					</div>
@@ -467,9 +467,9 @@ li strong {
 				<div style="flex: 1.2;">
 					<h2>ユーザー別要件</h2>
 					<ul style="margin-bottom: 30px; line-height: 1.6;">
-						<li><strong>非会員</strong>：ポスト閲覧、一覧の閲覧、QnA回答が可能（質問の投稿は不可）</li>
-						<li><strong>会員</strong>：Google／一般ログイン、マイページ管理、コメント・QnAの作成／修正／削除</li>
-						<li><strong>管理者</strong>：全機能利用可能、公共データ写真APIを活用した旅行記事作成、会員管理、QnA、コメント管理</li>
+						<li><strong>非会員</strong>：ポスト閲覧、一覧の閲覧、Q&A回答が可能（質問の投稿は不可）</li>
+						<li><strong>会員</strong>：Google／一般ログイン、マイページ管理、コメント・Q&Aの作成／修正／削除</li>
+						<li><strong>管理者</strong>：全機能利用可能、公共データ写真APIを活用した旅行記事作成、会員管理、Q&A、コメント管理</li>
 					</ul>
 
 					<h2>非機能要件</h2>
@@ -481,9 +481,9 @@ li strong {
 					</ul>
 				</div>
 
-				<div class="diagram-wrapper">
-					<div class="diagram-container">
-						<img src="usecase.png" alt="Use Case Diagram">
+				<div class="gram-wrapper">
+					<div class="gram-container">
+						<img src="usecase.png" alt="Use Case gram">
 					</div>
 				</div>
 			</div>
@@ -505,8 +505,8 @@ li strong {
 						<li><strong>BLOG_PRO</strong>：旅行ブログ投稿</li>
 						<li><strong>BLOG_IMAGE_PRO</strong>：ブログ画像管理</li>
 						<li><strong>REPLY_PRO</strong>：コメント機能</li>
-						<li><strong>QNA_PRO</strong>：QnA質問管理</li>
-						<li><strong>QNA_ANSWER_PRO</strong>：QnA回答管理</li>
+						<li><strong>QNA_PRO</strong>：Q&A質問管理</li>
+						<li><strong>QNA_ANSWER_PRO</strong>：Q&A回答管理</li>
 					</ul>
 				</div>
 
@@ -538,7 +538,7 @@ li strong {
 			<div class="card-container">
 				<div class="card">
 					<h2 style="margin-top: 0;">URL設計（RESTful指向）</h2>
-					<ul style="font-size: 0.9em;">
+					<ul style="font-size: 1em;">
 						<li>/member/googleCallback.do ：Googleログイン</li>
 						<li>/member/memberjoin.do ：一般会員加入</li>
 						<li>/post/list.do ：旅行記事一覧</li>
@@ -550,7 +550,7 @@ li strong {
 
 				<div class="card">
 					<h2 style="margin-top: 0;">セキュリティ設計</h2>
-					<ul style="font-size: 0.9em;">
+					<ul style="font-size: 1em;">
 						<li>Admin Filterによる管理者専用パス(/adm/*)の一括管理</li>
 						<li>Session(userid, role)を利用したリアルタイム ユーザー権限判定</li>
 						<li>権際限のないアクセス時(ADMIN未保有)のメイン画面へリダイレクト</li>
@@ -571,14 +571,14 @@ li strong {
 			<div class="tech-grid">
 				<img src="https://velog.velcdn.com/images/dogakday/post/cd89ba57-f98b-4f95-bb9d-eebea55bd521/1_zKnKunxf74dpaMMtcKrB9g.png" height="60" alt="Java"> 
 				<img src="https://www.vectorlogo.zone/logos/apache_tomcat/apache_tomcat-icon.svg" height="60" alt="Tomcat"> 
-				<img src="oracledatabase.svg" width="140px" height="60" alt="Oracle">
+				<img src="oraclelogo.png" width="140px" height="60" alt="Oracle">
 				<img src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" height="60" alt="HTML5">
 				<img src="https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" height="60"	alt="jquery"> 
 				<img src="https://www.vectorlogo.zone/logos/javascript/javascript-ar21~bgwhite.svg" height="60" alt="js">
 				<img src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" height="60" alt="Bootstrap"> 
 				<img src="https://oauth.net/images/oauth-2-sm.png" height="60" alt="Oauth2.0">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Google_Gemini_logo_2025.svg" width="140px" height="60" alt="Gemini">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" height="60" alt="ChatGPT">
+				<img src="https://upload.wikime.org/wikipe/commons/d/d9/Google_Gemini_logo_2025.svg" width="140px" height="60" alt="Gemini">
+				<img src="https://upload.wikime.org/wikipe/commons/e/ef/ChatGPT-Logo.svg" height="60" alt="ChatGPT">
 			</div>
 
 			<div class="card-container">
@@ -622,7 +622,7 @@ li strong {
 					<div class="video-wrapper">
 						<iframe src="https://www.youtube.com/embed/eWyN3S04fKU"
 							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-me; gyroscope; picture-in-picture; web-share"
 							allowfullscreen></iframe>
 					</div>
 				</div>
@@ -632,7 +632,7 @@ li strong {
 					<div class="video-wrapper">
 						<iframe src="https://www.youtube.com/embed/EwIC4MMKg8Y"
 							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-me; gyroscope; picture-in-picture; web-share"
 							allowfullscreen></iframe>
 					</div>
 				</div>
@@ -651,7 +651,7 @@ li strong {
 					<div class="video-wrapper">
 						<iframe src="https://www.youtube.com/embed/vzxDCBRlNLQ"
 							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-me; gyroscope; picture-in-picture; web-share"
 							allowfullscreen></iframe>
 					</div>
 				</div>
@@ -718,5 +718,6 @@ li strong {
 </body>
 
 </html>
+
 
 
