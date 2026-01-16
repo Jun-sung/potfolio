@@ -119,6 +119,7 @@ li::before {
 
 li.no-before::before {
 	content: none; /* before 제거 */
+	left: 5px;
 }
 
 li strong {
@@ -569,16 +570,26 @@ li strong {
 			<h2>開発環境・技術スタック</h2>
 
 			<div class="tech-grid">
-				<img src="https://velog.velcdn.com/images/dogakday/post/cd89ba57-f98b-4f95-bb9d-eebea55bd521/1_zKnKunxf74dpaMMtcKrB9g.png" height="60" alt="Java"> 
-				<img src="https://www.vectorlogo.zone/logos/apache_tomcat/apache_tomcat-icon.svg" height="60" alt="Tomcat"> 
-				<img src="oraclelogo.png" width="140px" height="60" alt="Oracle">
-				<img src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg" height="60" alt="HTML5">
-				<img src="https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg" height="60"	alt="jquery"> 
-				<img src="https://www.vectorlogo.zone/logos/javascript/javascript-ar21~bgwhite.svg" height="60" alt="js">
-				<img src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg" height="60" alt="Bootstrap"> 
-				<img src="https://oauth.net/images/oauth-2-sm.png" height="60" alt="Oauth2.0">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Google_Gemini_logo_2025.svg" width="140px" height="60" alt="Gemini">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" height="60" alt="ChatGPT">
+				<img
+					src="https://velog.velcdn.com/images/dogakday/post/cd89ba57-f98b-4f95-bb9d-eebea55bd521/1_zKnKunxf74dpaMMtcKrB9g.png"
+					height="60" alt="Java"> <img
+					src="https://www.vectorlogo.zone/logos/apache_tomcat/apache_tomcat-icon.svg"
+					height="60" alt="Tomcat"> <img src="oraclelogo.png"
+					width="140px" height="60" alt="Oracle"> <img
+					src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg"
+					height="60" alt="HTML5"> <img
+					src="https://www.vectorlogo.zone/logos/jquery/jquery-icon.svg"
+					height="60" alt="jquery"> <img
+					src="https://www.vectorlogo.zone/logos/javascript/javascript-ar21~bgwhite.svg"
+					height="60" alt="js"> <img
+					src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-icon.svg"
+					height="60" alt="Bootstrap"> <img
+					src="https://oauth.net/images/oauth-2-sm.png" height="60"
+					alt="Oauth2.0"> <img
+					src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Google_Gemini_logo_2025.svg"
+					width="140px" height="60" alt="Gemini"> <img
+					src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg"
+					height="60" alt="ChatGPT">
 			</div>
 
 			<div class="card-container">
@@ -613,10 +624,10 @@ li strong {
        Slide 7 : 기능 데모 영상
        =============================== -->
 		<section class="bg-light">
-			<h2>主要機能デモンストレーション (1/2)</h2>
+			<h2>主要機能デモンストレーション (1/3)</h2>
 
-			<div class="video-section"
-				style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+			<div
+				style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin-top: 30px;">
 				<div class="video-container">
 					<div class="video-title">🔐 ユーザー認証（Google OAuth & 一般ログイン）</div>
 					<div class="video-wrapper">
@@ -627,14 +638,25 @@ li strong {
 					</div>
 				</div>
 
-				<div class="video-container">
-					<div class="video-title">📝 ブログ投稿 & コメント機能（AJAX）</div>
-					<div class="video-wrapper">
-						<iframe src="https://www.youtube.com/embed/EwIC4MMKg8Y"
-							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen></iframe>
-					</div>
+				<div class="description-container">
+					<h3
+						style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">実装のポイント</h3>
+					<ul
+						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
+						<li class="no-before">✅ <strong>Google OAuth 2.0:</strong>
+							外部API連携による簡便なログイン環境の構築
+						</li>
+						<li class="no-before">✅ <strong>jBcrypt暗号化:</strong>
+							独自ログイン時のパスワード<strong>ハッシュ化</strong>によるセキュリティ強化
+						</li>
+						<li class="no-before">✅ <strong>AJAX非同期通信:</strong> 画面遷移のない<strong>リアルタイムID重複チェック</strong>の実装
+						</li>
+						<li class="no-before">✅ <strong>セッション管理:</strong>
+							Sessionを利用したログイン状態の維持と権限管理
+						</li>
+						<li class="no-before">✅ <strong>UXの向上:</strong> <strong>非同期処理</strong>を活用したシームレスなユーザー体験の提供
+						</li>
+					</ul>
 				</div>
 			</div>
 
@@ -642,11 +664,52 @@ li strong {
 		</section>
 
 		<section class="bg-white">
-			<h2>主要機能デモンストレーション (2/2)</h2>
+			<h2>主要機能デモンストレーション (2/3)</h2>
 
-			<div class="video-section"
-				style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: stretch;">
-				<div class="video-container" style="margin-bottom: 0;">
+			<div
+				style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin-top: 30px;">
+				<div class="video-container">
+					<div class="video-title">📝 投稿管理 & コメント機能（AJAX）</div>
+					<div class="video-wrapper">
+						<iframe src="https://www.youtube.com/embed/EwIC4MMKg8Y"
+							title="YouTube video player" frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen></iframe>
+					</div>
+				</div>
+
+				<div class="description-container">
+					<h3
+						style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">実装のポイント</h3>
+					<ul
+						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
+						<li class="no-before">✅ <strong>Summernote導入:</strong>
+							WYSIWYGエディタによる直感的な記事作成環境
+						</li>
+						<li class="no-before">✅ <strong>管理者フィルター:</strong> <strong>Session</strong>ベースの権限検証による管理者限定の投稿制御
+						</li>
+						<li class="no-before">✅ <strong>AJAX非同期通信:</strong>
+							ページ更新なしのリアルタイムなコメント登録・削除
+						</li>
+						<li class="no-before">✅ <strong>マルチパート対応:</strong>
+							画像ファイルのサーバー保存およびエディター内プレビュー表示
+						</li>
+						<li class="no-before">✅ <strong>JSONデータ処理:</strong>
+							クライアント・サーバー間の効率的なデータ送受信
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="footer">08 / Feature Demo (2)</div>
+		</section>
+
+		<section class="bg-light">
+			<h2>主要機能デモンストレーション (3/3)</h2>
+
+			<div
+				style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin-top: 30px; margin-left: 0px;">
+				<div class="video-container">
 					<div class="video-title">⚙️ 管理者ダッシュボード & 会員管理</div>
 					<div class="video-wrapper">
 						<iframe src="https://www.youtube.com/embed/vzxDCBRlNLQ"
@@ -656,26 +719,28 @@ li strong {
 					</div>
 				</div>
 
-				<div class="video-container"
-					style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center;">
-					<div class="video-title">🚀 実装フォーカス</div>
-					<div style="padding: 20px;">
-						<ul
-							style="font-size: 20px; line-height: 2.2; list-style: none; margin-left: 0;">
-							<li style="margin-bottom: 15px;"><strong
-								style="color: #1e40af;">Security:</strong> Admin Filterによる権限制御</li>
-							<li style="margin-bottom: 15px;"><strong
-								style="color: #1e40af;">Efficiency:</strong> AJAXによる非同期データ処理</li>
-							<li class="no-before"
-								style="margin-bottom: 15px; margin-left: 85px;">&nbsp;&nbsp;公共データAPIの活用による簡単な投稿</li>
-							<li><strong style="color: #1e40af;">UX:</strong> Google
-								OAuth 2.0 簡単認証システム</li>
-						</ul>
-					</div>
+				<div class="description-container">
+					<h3
+						style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">実装のポイント</h3>
+					<ul
+						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px;">
+						<li class="no-before">✅ <strong>管理者フィルター:</strong>
+							管理者専用ページへのアクセス制限および権限制御
+						</li>
+						<li class="no-before">✅ <strong>会員管理システム:</strong>
+							会員状態の照会および権限(Role)の動的変更機能
+						</li>
+						<li class="no-before">✅ <strong>データ視覚化:</strong>
+							ダッシュボードを通じた主要指標のステータス把握
+						</li>
+						<li class="no-before">✅ <strong>不正アクセス遮断:</strong>
+							権限のないユーザーによる不適切なアクセスをFilterで防止
+						</li>
+					</ul>
 				</div>
 			</div>
 
-			<div class="footer">08 / Feature Demo (2)</div>
+			<div class="footer">09 / Feature Demo (3)</div>
 		</section>
 
 
@@ -695,12 +760,12 @@ li strong {
 				</ul>
 			</div>
 
-			<div class="footer">09 / Learning</div>
+			<div class="footer">10 / Learning</div>
 		</section>
-		
+
 		<section class="bg-light">
 			<h2>今後の改善点 (Future Improvements)</h2>
-			
+
 			<div class="learning-list">
 				<ul>
 					<li><strong>Spring Frameworkへの移行</strong>：依存性の注入(DI)による保守性の向上</li>
@@ -711,10 +776,9 @@ li strong {
 				</ul>
 			</div>
 
-			<div class="footer">10 / Future Improvements</div>
+			<div class="footer">11 / Future Improvements</div>
 		</section>
 	</div>
 
 </body>
-
 </html>
