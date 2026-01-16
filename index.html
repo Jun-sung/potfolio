@@ -394,6 +394,22 @@ li strong {
 	color: #667eea;
 	font-size: 24px;
 }
+/* 기능 요구사항 섹션 이미지 공통 처리 */
+.feature-image-wrapper {
+  width: 100%;
+  height: 600px; /* 필요 시 400~500px 조절 */
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.feature-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* 핵심 */
+  display: block;
+}
+
+	
 </style>
 </head>
 
@@ -414,6 +430,15 @@ li strong {
 
 			<div class="overview-info">
 				<p>開発者：高俊成&nbsp;&nbsp;||&nbsp;&nbsp;開発期間：2026.01.07～2026.01.14（8日）</p>
+			</div>
+			<div style="margin-top: 35px; text-align: center;">
+			    <a href="https://github.com/Jun-sung/personalProject" target="_blank" 
+			       style="display: inline-flex; align-items: center; background-color: #24292e; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+			        <svg height="24" width="24" viewBox="0 0 16 16" style="fill: white; margin-right: 12px;">
+			            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+			        </svg>
+			        GitHub Repository 🔗
+			    </a>
 			</div>
 
 			<div class="footer">01 / Overview</div>
@@ -623,7 +648,32 @@ li strong {
 		<!-- ===============================
        Slide 7 : 기능 데모 영상
        =============================== -->
-		<section class="bg-light">
+		<!-- 요구사항 -->
+       	<section class="bg-light">
+		    <h2>機能要求事項分析 (1/3) : ユーザー認証</h2>
+		    <div style="display: grid;background-size: cover; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 50px;">
+		        <div  class="feature-image-wrapper">
+		            <img src="login.png" 
+		                 alt="Authentication" 
+		                 style="width: 100%; background-size: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+		                 onerror="this.src='https://via.placeholder.com/450x300?text=Security+Auth+Image'">
+		        </div>
+		
+		        <div class="description-container">
+		            <h3 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">ユーザーニーズ&機能要件</h3>
+		            <ul style="font-size: 20px; line-height: 2.2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
+		              <li class="no-before">🎯 <strong>手軽なログイン:</strong> 普段使っているGoogleアカウントで簡単に利用したい</li>
+				      <li class="no-before">🎯 <strong>ミスの防止:</strong> 入力にIDやパスワードが間違っていたらすぐに知らせてほしい</li>
+				      <li class="no-before">🎯 <strong>情報の保護:</strong> 私の個人情報(パスワード)が安全に守られてほしい</li>
+				      <li class="no-before">🎯 <strong>権限の区分:</strong> 一般ユーザーと管理者のメニューがしっかり分かれてほしい</li>
+		            </ul>
+		        </div>
+		    </div>
+		    <div class="footer">06 / Requirements (1)</div>
+		</section>	
+       
+		<!-- 데모영상 -->
+		<section class="bg-white">
 			<h2>主要機能デモンストレーション (1/3)</h2>
 
 			<div
@@ -649,12 +699,12 @@ li strong {
 						<li class="no-before">✅ <strong>jBcrypt暗号化:</strong>
 							独自ログイン時のパスワード<strong>ハッシュ化</strong>によるセキュリティ強化
 						</li>
-						<li class="no-before">✅ <strong>AJAX非同期通信:</strong> 画面遷移のない<strong>リアルタイムID重複チェック</strong>の実装
+						<li class="no-before">✅ <strong>AJAX非同期通信:</strong> 画面遷移のない<strong>アカウント有効確認および入力値のリアルタイム検証</strong>の実装
 						</li>
 						<li class="no-before">✅ <strong>セッション管理:</strong>
 							Sessionを利用したログイン状態の維持と権限管理
 						</li>
-						<li class="no-before">✅ <strong>UXの向上:</strong> <strong>非同期処理</strong>を活用したシームレスなユーザー体験の提供
+						<li class="no-before">✅ <strong>UXの向上:</strong> <strong>モーダルウィンドウと非同期処理</strong>を活用したシームレスなユーザー体験の提供
 						</li>
 					</ul>
 				</div>
@@ -662,7 +712,32 @@ li strong {
 
 			<div class="footer">07 / Feature Demo (1)</div>
 		</section>
-
+		
+		<!-- 요구사항 -->
+		<section class="bg-light">
+		    <h2>기능 요구사항 분석 (2/3) : 投稿 & コメント</h2>
+		
+		    <div style="display: grid;background-size: cover; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 50px;">
+		        <div  class="feature-image-wrapper">
+		            <img src="write.png" 
+		                 alt="Blog Post" 
+		                 style="width: 100%; background-size: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+		                 onerror="this.src='https://via.placeholder.com/450x300?text=Blog+Post+Feature'">
+		        </div>
+		
+				<div class="description-container">
+				    <h3 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">ユーザーの要望 (User Needs)</h3>
+				    <ul style="font-size: 20px; line-height: 2.2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
+				        <li class="no-before">🎯 <strong>自由な執筆:</strong> ブログのように写真や文字を自由な位置に配置したい</li>
+				        <li class="no-before">🎯 <strong>快適なアップロード:</strong> 重い写真を選んでも画面が止まらず、スムーズに動くことを望みます。私にない写真も検索してアップロードしたいです。</li>
+				        <li class="no-before">🎯 <strong>活発な交流:</strong> ページを読み直さなくても、すぐにコメントを書いて確認したい</li>
+				        <li class="no-before">🎯 <strong>見やすい一覧:</strong> 記事の内容がひと目で分かるように、代表写真を表示してほしい</li>
+				    </ul>
+				</div>
+		    </div>
+		    <div class="footer">07 / Requirements (2)</div>
+		</section>
+		<!-- 데모영상 -->
 		<section class="bg-white">
 			<h2>主要機能デモンストレーション (2/3)</h2>
 
@@ -677,14 +752,13 @@ li strong {
 							allowfullscreen></iframe>
 					</div>
 				</div>
-
 				<div class="description-container">
 					<h3
 						style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">実装のポイント</h3>
 					<ul
 						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
 						<li class="no-before">✅ <strong>Summernote導入:</strong>
-							WYSIWYGエディタによる直感的な記事作成環境
+							見掛けどおりに結果が出るエディタによる直感的な記事作成環境
 						</li>
 						<li class="no-before">✅ <strong>管理者フィルター:</strong> <strong>Session</strong>ベースの権限検証による管理者限定の投稿制御
 						</li>
@@ -694,9 +768,8 @@ li strong {
 						<li class="no-before">✅ <strong>マルチパート対応:</strong>
 							画像ファイルのサーバー保存およびエディター内プレビュー表示
 						</li>
-						<li class="no-before">✅ <strong>JSONデータ処理:</strong>
-							クライアント・サーバー間の効率的なデータ送受信
-						</li>
+						<li class="no-before">✅ <strong>API活用:</strong>
+									公共データAPIを活用して簡単に写真を挿入						</li>
 					</ul>
 				</div>
 			</div>
@@ -704,7 +777,31 @@ li strong {
 			<div class="footer">08 / Feature Demo (2)</div>
 		</section>
 
+		<!-- 요구사항 -->
 		<section class="bg-light">
+		    <h2>기능 요구사항 분석 (3/3) : 管理者ダッシュボード</h2>
+		
+		    <div style="display: grid;background-size: cover; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 50px;">
+		        <div class="feature-image-wrapper">
+		            <img src="adminpage.png" 
+		                 alt="Admin Dashboard" 
+		                 style="width: 100%; background-size: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+		                 onerror="this.src='https://via.placeholder.com/450x300?text=Admin+Dashboard+Image'">
+		        </div>
+				<div class="description-container">
+				    <h3 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">運営者の要望 (Admin Needs)</h3>
+				    <ul style="font-size: 20px; line-height: 2.2; list-style: none; padding: 0; margin-top: 20px;margin-left: 0px;">
+				        <li class="no-before">🎯 <strong>一括管理:</strong> 登録されている会員の情報をひとつの画面で管理したい</li>
+				        <li class="no-before">🎯 <strong>セキュリティ:</strong> 一般ユーザーが管理用ページに入れないように制限したい</li>
+				        <li class="no-before">🎯 <strong>ステータス確認:</strong> すべてのポスティングとコメントを一度に管理したいです。</li>
+				    </ul>
+				</div>
+		    </div>
+		    <div class="footer">08 / Requirements (3)</div>
+		</section>
+
+		<!-- 데모영상 -->
+		<section class="bg-white">
 			<h2>主要機能デモンストレーション (3/3)</h2>
 
 			<div
@@ -723,12 +820,9 @@ li strong {
 					<h3
 						style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">実装のポイント</h3>
 					<ul
-						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px;">
-						<li class="no-before">✅ <strong>管理者フィルター:</strong>
-							管理者専用ページへのアクセス制限および権限制御
-						</li>
+						style="font-size: 19px; line-height: 2; list-style: none; padding: 0; margin-top: 20px; margin-left: 0px;">
 						<li class="no-before">✅ <strong>会員管理システム:</strong>
-							会員状態の照会および権限(Role)の動的変更機能
+							会員の活動照会及び追放機能
 						</li>
 						<li class="no-before">✅ <strong>データ視覚化:</strong>
 							ダッシュボードを通じた主要指標のステータス把握
@@ -742,7 +836,6 @@ li strong {
 
 			<div class="footer">09 / Feature Demo (3)</div>
 		</section>
-
 
 		<!-- ===============================
        Slide 9 : 학습 성과
@@ -782,3 +875,4 @@ li strong {
 
 </body>
 </html>
+
