@@ -345,16 +345,22 @@ li strong {
 }
 
 .diagram-container {
+width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 	background: white;
-	padding: 24px;
 	border-radius: 12px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	display: inline-block;
 }
 
 .diagram-container img {
-	max-width: 100%;
-	height: 570px;
+	width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    display: block; /* 하단 미세한 공백 제거 */
 	border-radius: 8px;
 }
 
@@ -537,7 +543,7 @@ li strong {
 				</div>
 
 				<!-- 오른쪽 이미지 -->
-				<div class="erd-wrapper" style="margin-right: 150px;">
+				<div class="erd-wrapper">
 					<img src="DB_ERD.png">
 				</div>
 			</div>
@@ -875,6 +881,7 @@ li strong {
 
 </body>
 </html>
+
 
 
 
